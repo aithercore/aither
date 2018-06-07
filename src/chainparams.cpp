@@ -152,8 +152,9 @@ public:
 
         checkpointData = (CCheckpointData){
             boost::assign::map_list_of
-                    ( 20, uint256S("0x0000086c708613719239d52e08cde4dc2fe5def7f779427c2003eb637733e177")),
-            1528315351, // * UNIX timestamp of last checkpoint block
+                    ( 20, uint256S("0x0000086c708613719239d52e08cde4dc2fe5def7f779427c2003eb637733e177"))
+                    ( 170, uint256S("0x00000019113ea5adaedfaa335aeca924ed650d0656eb9e3b510722162d0b343e")),
+            1528334639, // * UNIX timestamp of last checkpoint block
             1,        // * total number of transactions between genesis and last checkpoint
             //   (the tx=... number in the SetBestChain debug.log lines)
             500         // * estimated number of transactions per day after checkpoint
@@ -220,8 +221,8 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "seedtest-1.aithercoin.com"));
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "seedtest-2.aithercoin.com"));
+        vSeeds.push_back(CDNSSeedData("aithercoin.com", "test.seed-1.aithercoin.com"));
+        vSeeds.push_back(CDNSSeedData("aithercoin.com", "test.seed-2.aithercoin.com"));
 
         // Testnet Aither addresses start with 'B'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,25);
