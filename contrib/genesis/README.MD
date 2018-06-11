@@ -4,15 +4,17 @@
 
 
 ## setup
+Dependencies
 
-```js
-sudo pip install git+git://github.com/nasa8x/mixhash.git
+    sudo pip install scrypt construct==2.5.2
 
-git clone https://github.com/nasa8x/genesis-block.git
+    sudo pip install git+git://github.com/nasa8x/mixhash.git
 
-cd genesis-block
+    git clone https://github.com/nasa8x/genesis-block.git
 
-```
+    cd genesis-block
+
+
 
 ## help
 

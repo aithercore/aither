@@ -114,9 +114,9 @@ public:
         nMaxTipAge = 60 * 60 * 60; // ~1440 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1527260000, 116795, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1527240888, 156208, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000031315d3b40f556e99f24e594393bd857438b9a53756c36ceaf123e2bf35"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00000e4661250dd11c2d1268f5b8684a28529ec4e89c9ffa73e2514235759179"));
         assert(genesis.hashMerkleRoot == uint256S("0x0b6e1a2cec4837dd7d4b26e0afc1c776ecc5edea2403f05e55492d28bcb46554"));
 
         vSeeds.push_back(CDNSSeedData("aithercoin.com", "seed-1.aithercoin.com"));
@@ -152,8 +152,8 @@ public:
 
         checkpointData = (CCheckpointData){
             boost::assign::map_list_of
-            ( 0, uint256S("0x0000031315d3b40f556e99f24e594393bd857438b9a53756c36ceaf123e2bf35")),
-            1527260000, // * UNIX timestamp of last checkpoint block
+            ( 0, uint256S("0x00000e4661250dd11c2d1268f5b8684a28529ec4e89c9ffa73e2514235759179")),
+            1527240888, // * UNIX timestamp of last checkpoint block
             0,          // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
             0           // * estimated number of transactions per day after checkpoint
@@ -213,9 +213,9 @@ public:
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1527260001, 798644, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1527241888, 811136, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000108377e1228a7f029396819455593d49b753e65a92a553cb0e06a5605bd"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000037f8c7918b4b7b89595579989011318f25c82208114f9b7f2002e8ff42b"));
         assert(genesis.hashMerkleRoot == uint256S("0x0b6e1a2cec4837dd7d4b26e0afc1c776ecc5edea2403f05e55492d28bcb46554"));
 
         vFixedSeeds.clear();
@@ -251,8 +251,8 @@ public:
 
         checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
-                ( 0, uint256S("0x00000108377e1228a7f029396819455593d49b753e65a92a553cb0e06a5605bd")),
-                1527260001, // * UNIX timestamp of last checkpoint block
+                ( 0, uint256S("0x0000037f8c7918b4b7b89595579989011318f25c82208114f9b7f2002e8ff42b")),
+                1527241888, // * UNIX timestamp of last checkpoint block
                 0,          // * total number of transactions between genesis and last checkpoint
                             //   (the tx=... number in the SetBestChain debug.log lines)
                 0           // * estimated number of transactions per day after checkpoint
@@ -310,9 +310,9 @@ public:
         nDefaultPort = 42888;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1527260002, 538987, 0x1e0ffff0, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1527242888, 167826, 0x1e0ffff0, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000fa647a28ce516eb5e4b540ed7560ecb4d1a71cbba31093f68a0d04e56bb"));
+        assert(consensus.hashGenesisBlock == uint256S("0x000006a6fa6cef8f52849100a0b3e47671e343629038f85eb2b1ce5a046c1092"));
         assert(genesis.hashMerkleRoot == uint256S("0x0b6e1a2cec4837dd7d4b26e0afc1c776ecc5edea2403f05e55492d28bcb46554"));
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
@@ -328,7 +328,7 @@ public:
 
         checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
-                ( 0, uint256S("0x00000fa647a28ce516eb5e4b540ed7560ecb4d1a71cbba31093f68a0d04e56bb")),
+                ( 0, uint256S("0x000006a6fa6cef8f52849100a0b3e47671e343629038f85eb2b1ce5a046c1092")),
                 0,
                 0,
                 0
