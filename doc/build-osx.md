@@ -40,7 +40,7 @@ NOTE: Building with Qt4 is still supported, however, doing so could result in a 
 
 1. Clone the GitHub tree to get the source code and go into the directory.
 
-        git clone https://github.com/aithercoin/aithercoin.git
+        git clone https://github.com/aithercore/aither.git
         cd aither
 
 2.  Build Aither Core:

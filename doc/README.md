@@ -24,9 +24,9 @@ Drag Aither-Qt to your applications folder, and then run Aither-Qt.
 
 ### Need Help?
 
-* See the [Aither documentation](https://aithercoin.atlassian.net/wiki/display/DOC)
+* See the [Aither documentation](https://aithercore.atlassian.net/wiki/display/DOC)
 for help and more information.
-* Ask for help on [#aithercoin](http://webchat.freenode.net?channels=aithercoin) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=aithercoin).
+* Ask for help on [#aithercoin](http://webchat.freenode.net?channels=aithercore) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=aithercoin).
 * Ask for help on the [AitherTalk](https://aithertalk.org/) forums.
 
 Building
@@ -58,7 +58,7 @@ The Aither Core repo's [root README](/README.md) contains relevant information o
 
 ### Resources
 * Discuss on the [AitherTalk](https://aithertalk.org/) forums, in the Development & Technical Discussion board.
-* Discuss on [#aithercoin](http://webchat.freenode.net/?channels=aithercoin) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=aithercoin).
+* Discuss on [#aithercoin](http://webchat.freenode.net/?channels=aithercore) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=aithercoin).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)

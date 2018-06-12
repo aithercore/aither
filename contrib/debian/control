@@ -25,8 +25,8 @@ Build-Depends: debhelper,
  python
 Standards-Version: 3.9.2
 Homepage: https://www.aither.org/
-Vcs-Git: git://github.com/aithercoin/aither.git
-Vcs-Browser: https://github.com/aithercoin/aither
+Vcs-Git: git://github.com/aithercore/aither.git
+Vcs-Browser: https://github.com/aithercore/aither
 
 Package: aitherd
 Architecture: any
