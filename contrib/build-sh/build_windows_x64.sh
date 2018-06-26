@@ -4,6 +4,8 @@ echo '# Building Aither Core                          #'
 echo '#################################################'
 cd ../..
 AIT_ROOT=$(pwd)
+sudo apt-get update -y
+sudo apt-get upgrade -y
 sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev g++-mingw-w64-x86-64 mingw-w64-x86-64-dev
 cd depends
 make HOST=x86_64-w64-mingw32 -j4
