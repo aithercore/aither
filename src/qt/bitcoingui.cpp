@@ -1020,11 +1020,6 @@ void BitcoinGUI::setAdditionalDataSyncProgress(double nSyncProgress)
                 .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
             spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES;
 
-#ifdef ENABLE_WALLET
-            if(walletFrame)
-                walletFrame->showOutOfSyncWarning(false);
-#endif // ENABLE_WALLET
-
             progressBar->setFormat(tr("Synchronizing additional data: %p%"));
             progressBar->setMaximum(1000000000);
             progressBar->setValue(nSyncProgress * 1000000000.0 + 0.5);
@@ -1033,6 +1028,10 @@ void BitcoinGUI::setAdditionalDataSyncProgress(double nSyncProgress)
         strSyncStatus = QString(masternodeSync.GetSyncStatus().c_str());
         progressBarLabel->setText(strSyncStatus);
         tooltip = strSyncStatus + QString("<br>") + tooltip;
+#ifdef ENABLE_WALLET
+        if(walletFrame)
+                walletFrame->showOutOfSyncWarning(false);
+#endif // ENABLE_WALLET
     }
 
     // Don't word-wrap this (fixed-width) tooltip

@@ -632,6 +632,38 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
         // Create empty aither.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL)
+            std::string strHeader = "# Default nodes config\n"
+                                    "addnode=node-01.aithercoin.com:40888\n"
+                                    "addnode=node-02.aithercoin.com:40888\n"
+                                    "addnode=node-03.aithercoin.com:40888\n"
+                                    "addnode=node-04.aithercoin.com:40888\n"
+                                    "addnode=node-05.aithercoin.com:40888\n"
+                                    "addnode=node-06.aithercoin.com:40888\n"
+                                    "addnode=node-07.aithercoin.com:40888\n"
+                                    "addnode=node-08.aithercoin.com:40888\n"
+                                    "addnode=node-09.aithercoin.com:40888\n"
+                                    "addnode=node-10.aithercoin.com:40888\n"
+                                    "addnode=node-11.aithercoin.com:40888\n"
+                                    "addnode=node-12.aithercoin.com:40888\n"
+                                    "addnode=node-13.aithercoin.com:40888\n"
+                                    "addnode=node-14.aithercoin.com:40888\n"
+                                    "addnode=node-15.aithercoin.com:40888\n"
+                                    "addnode=node-16.aithercoin.com:40888\n"
+                                    "addnode=node-17.aithercoin.com:40888\n"
+                                    "addnode=node-18.aithercoin.com:40888\n"
+                                    "addnode=node-19.aithercoin.com:40888\n"
+                                    "addnode=node-20.aithercoin.com:40888\n"
+                                    "addnode=node-21.aithercoin.com:40888\n"
+                                    "addnode=node-22.aithercoin.com:40888\n"
+                                    "addnode=node-23.aithercoin.com:40888\n"
+                                    "addnode=node-24.aithercoin.com:40888\n"
+                                    "addnode=node-25.aithercoin.com:40888\n"
+                                    "addnode=node-26.aithercoin.com:40888\n"
+                                    "addnode=node-27.aithercoin.com:40888\n"
+                                    "addnode=node-28.aithercoin.com:40888\n"
+                                    "addnode=node-29.aithercoin.com:40888\n"
+                                    "addnode=node-30.aithercoin.com:40888";
+            fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
             fclose(configFile);
         return; // Nothing to read, so just return
     }
