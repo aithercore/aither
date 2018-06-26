@@ -125,6 +125,8 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
         }
     }
 #if QT_VERSION >= 0x040700
+    QString txUrls = "https://explorer.aithercoin.com/tx/%s";
+    ui->thirdPartyTxUrls->text = txUrls;
     ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
 #endif
 

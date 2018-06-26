@@ -631,7 +631,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
     if (!streamConfig.good()){
         // Create empty aither.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
-        if (configFile != NULL)
+        if (configFile != NULL) {
             std::string strHeader = "# Default nodes config\n"
                                     "addnode=node-01.aithercoin.com:40888\n"
                                     "addnode=node-02.aithercoin.com:40888\n"
@@ -665,6 +665,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                                     "addnode=node-30.aithercoin.com:40888";
             fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
             fclose(configFile);
+        }
         return; // Nothing to read, so just return
     }
 
