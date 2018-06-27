@@ -135,7 +135,7 @@ You can confirm that remote server is on the correct block by issuing
 
 ```aither-cli getinfo```
 
-and comparing with the official explorer at https://explorer.aither.org/chain/Aither
+and comparing with the official explorer at https://explorer.aithercoin.com/
 
 ### Local
 

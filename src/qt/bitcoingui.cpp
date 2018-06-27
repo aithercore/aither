@@ -928,7 +928,7 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVer
 
     // Set icon state: spinning if catching up, tick otherwise
     QString theme = GUIUtil::getThemeName();
-    LogPrintf("bitcoingui.cpp:931 masternodeSync.IsBlockchainSynced(): %s\n",masternodeSync.IsBlockchainSynced());
+    if (fDebug) LogPrintf("bitcoingui.cpp:931 masternodeSync.IsBlockchainSynced(): %s\n",masternodeSync.IsBlockchainSynced());
     if(!masternodeSync.IsBlockchainSynced())
     {
         // Represent time from last generated block in human readable text
