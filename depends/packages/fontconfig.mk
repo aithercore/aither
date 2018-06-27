@@ -1,6 +1,6 @@
 package=fontconfig
 $(package)_version=2.11.1
-$(package)_download_path=http://www.freedesktop.org/software/fontconfig/release/
+$(package)_download_path=https://github.com/aithercore/aither-dependent-packages/raw/master/$(package)
 $(package)_file_name=$(package)-$($(package)_version).tar.bz2
 $(package)_sha256_hash=dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99
 $(package)_dependencies=freetype expat
