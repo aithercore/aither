@@ -928,7 +928,7 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVer
 
     // Set icon state: spinning if catching up, tick otherwise
     QString theme = GUIUtil::getThemeName();
-
+    LogPrintf("bitcoingui.cpp:931 masternodeSync.IsBlockchainSynced(): %s\n",masternodeSync.IsBlockchainSynced());
     if(!masternodeSync.IsBlockchainSynced())
     {
         // Represent time from last generated block in human readable text
@@ -981,6 +981,9 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVer
         tooltip += tr("Last received block was generated %1 ago.").arg(timeBehindText);
         tooltip += QString("<br>");
         tooltip += tr("Transactions after this will not yet be visible.");
+    } else {
+        //set synced
+        setAdditionalDataSyncProgress(nVerificationProgress);
     }
 
     // Don't word-wrap this (fixed-width) tooltip
@@ -1003,11 +1006,12 @@ void BitcoinGUI::setAdditionalDataSyncProgress(double nSyncProgress)
 
     // Set icon state: spinning if catching up, tick otherwise
     QString theme = GUIUtil::getThemeName();
-
+    if(fDebug) LogPrintf("bitcoingui.cpp:1009 masternodeSync.IsBlockchainSynced(): %s\n",masternodeSync.IsBlockchainSynced());
     if(masternodeSync.IsBlockchainSynced())
     {
         QString strSyncStatus;
         tooltip = tr("Up to date") + QString(".<br>") + tooltip;
+        if(fDebug) LogPrintf("bitcoingui.cpp:1014 masternodeSync.IsSynced(): %s\n",masternodeSync.IsSynced());
 
         if(masternodeSync.IsSynced()) {
             progressBarLabel->setVisible(false);

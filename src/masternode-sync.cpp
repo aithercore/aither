@@ -80,7 +80,6 @@ bool CMasternodeSync::IsBlockchainSynced(bool fBlockAccepted)
             return fBlockchainSynced;
         }
     }
-
     if(fDebug) LogPrintf("CMasternodeSync::IsBlockchainSynced -- state before check: %ssynced, skipped %d times\n", fBlockchainSynced ? "" : "not ", nSkipped);
 
     nTimeLastProcess = GetTime();
