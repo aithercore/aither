@@ -1106,9 +1106,9 @@ Adress: %4
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/aither/</source>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</source>
         <translation>Fattas språk eller är det en ofullständig översättning? Hjälp till att bidra med översättningar här:
-https://www.transifex.com/projects/p/aither/</translation>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>

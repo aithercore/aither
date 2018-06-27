@@ -1520,9 +1520,9 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/aither/</source>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</source>
         <translation>Fehlt eine Sprache oder ist unvollständig übersetzt? Hier können Sie helfen:
-https://www.transifex.com/projects/p/aither/</translation>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</translation>
     </message>
     <message>
         <source>User Interface Theme:</source>

@@ -1263,9 +1263,9 @@ Adres: %4
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/aither/</source>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</source>
         <translation>Aither Core nie został przetłumaczony na twój język? Tłumaczenie jest niepełne lub niepoprawne? Możesz pomóc nam tłumaczyć tutaj:
-https://www.transifex.com/projects/p/aither/</translation>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</translation>
     </message>
     <message>
         <source>User Interface Theme:</source>

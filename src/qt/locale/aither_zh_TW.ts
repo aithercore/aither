@@ -1443,9 +1443,9 @@
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/aither/</source>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</source>
         <translation>缺少相關語言或翻譯不完整？請到這裡協助翻譯
-https://www.transifex.com/projects/p/aither/</translation>
+https://github.com/aithercore/aither/tree/master/src/qt/locale</translation>
     </message>
     <message>
         <source>User Interface Theme:</source>
