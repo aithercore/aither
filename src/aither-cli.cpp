@@ -1,15 +1,14 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "chainparamsbase.h"
 #include "clientversion.h"
-#include "rpcclient.h"
-#include "rpcprotocol.h"
+#include "rpc/client.h"
+#include "rpc/protocol.h"
 #include "util.h"
 #include "utilstrencodings.h"
 
@@ -61,7 +60,7 @@ class CConnectionFailed : public std::runtime_error
 public:
 
     explicit inline CConnectionFailed(const std::string& msg) :
-        std::runtime_error(msg)
+            std::runtime_error(msg)
     {}
 
 };
@@ -80,9 +79,9 @@ static int AppInitRPC(int argc, char* argv[])
         std::string strUsage = _("Aither Core RPC client version") + " " + FormatFullVersion() + "\n";
         if (!mapArgs.count("-version")) {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  aither-cli [options] <command> [params]  " + _("Send command to Aither Core") + "\n" +
-                  "  aither-cli [options] help                " + _("List commands") + "\n" +
-                  "  aither-cli [options] help <command>      " + _("Get help for a command") + "\n";
+                        "  aither-cli [options] <command> [params]  " + _("Send command to Aither Core") + "\n" +
+                        "  aither-cli [options] help                " + _("List commands") + "\n" +
+                        "  aither-cli [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessageCli();
         }
@@ -94,7 +93,8 @@ static int AppInitRPC(int argc, char* argv[])
         }
         return EXIT_SUCCESS;
     }
-    if (!boost::filesystem::is_directory(GetDataDir(false))) {
+    bool datadirFromCmdLine = mapArgs.count("-datadir") != 0;
+    if (datadirFromCmdLine && !boost::filesystem::is_directory(GetDataDir(false))) {
         fprintf(stderr, "Error: Specified data directory \"%s\" does not exist.\n", mapArgs["-datadir"].c_str());
         return EXIT_FAILURE;
     }
@@ -102,6 +102,10 @@ static int AppInitRPC(int argc, char* argv[])
         ReadConfigFile(mapArgs, mapMultiArgs);
     } catch (const std::exception& e) {
         fprintf(stderr,"Error reading configuration file: %s\n", e.what());
+        return EXIT_FAILURE;
+    }
+    if (!datadirFromCmdLine && !boost::filesystem::is_directory(GetDataDir(false))) {
+        fprintf(stderr, "Error: Specified data directory \"%s\" from config file does not exist.\n", mapArgs["-datadir"].c_str());
         return EXIT_FAILURE;
     }
     // Check for -testnet or -regtest parameter (BaseParams() calls are only valid after this clause)
@@ -179,7 +183,7 @@ UniValue CallRPC(const string& strMethod, const UniValue& params)
         // Try fall back to cookie-based authentication if no password is provided
         if (!GetAuthCookie(&strRPCUserColonPass)) {
             throw runtime_error(strprintf(
-                _("Could not locate RPC credentials. No authentication cookie could be found, and no rpcpassword is set in the configuration file (%s)"),
+                    _("Could not locate RPC credentials. No authentication cookie could be found, and no rpcpassword is set in the configuration file (%s)"),
                     GetConfigFile().string().c_str()));
 
         }

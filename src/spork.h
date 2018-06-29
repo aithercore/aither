@@ -1,5 +1,4 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -19,7 +18,7 @@ class CSporkManager;
     - This would result in old clients getting confused about which spork is for what
 */
 static const int SPORK_START                                            = 10001;
-static const int SPORK_END                                              = 10013;
+static const int SPORK_END                                              = 10014;
 
 static const int SPORK_2_INSTANTSEND_ENABLED                            = 10001;
 static const int SPORK_3_INSTANTSEND_BLOCK_FILTERING                    = 10002;
@@ -30,6 +29,7 @@ static const int SPORK_10_MASTERNODE_PAY_UPDATED_NODES                  = 10009;
 static const int SPORK_12_RECONSIDER_BLOCKS                             = 10011;
 static const int SPORK_13_OLD_SUPERBLOCK_FLAG                           = 10012;
 static const int SPORK_14_REQUIRE_SENTINEL_FLAG                         = 10013;
+static const int SPORK_15_STRICT_NEW_PROTO_FLAG                         = 10014;
 
 static const int64_t SPORK_2_INSTANTSEND_ENABLED_DEFAULT                = 0;            // ON
 static const int64_t SPORK_3_INSTANTSEND_BLOCK_FILTERING_DEFAULT        = 0;            // ON
@@ -40,6 +40,7 @@ static const int64_t SPORK_10_MASTERNODE_PAY_UPDATED_NODES_DEFAULT      = 407090
 static const int64_t SPORK_12_RECONSIDER_BLOCKS_DEFAULT                 = 0;            // 0 BLOCKS
 static const int64_t SPORK_13_OLD_SUPERBLOCK_FLAG_DEFAULT               = 4070908800ULL;// OFF
 static const int64_t SPORK_14_REQUIRE_SENTINEL_FLAG_DEFAULT             = 4070908800ULL;// OFF
+static const int64_t SPORK_15_STRICT_NEW_PROTO_FLAG_DEFAULT             = 4070908800ULL;// OFF
 
 extern std::map<uint256, CSporkMessage> mapSporks;
 extern CSporkManager sporkManager;
@@ -93,7 +94,7 @@ public:
 
     bool Sign(std::string strSignKey);
     bool CheckSignature();
-    void Relay();
+    void Relay(CConnman& connman);
 };
 
 
@@ -108,9 +109,9 @@ public:
 
     CSporkManager() {}
 
-    void ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStream& vRecv);
+    void ProcessSpork(CNode* pfrom, std::string& strCommand, CDataStream& vRecv, CConnman& connman);
     void ExecuteSpork(int nSporkID, int nValue);
-    bool UpdateSpork(int nSporkID, int64_t nValue);
+    bool UpdateSpork(int nSporkID, int64_t nValue, CConnman& connman);
 
     bool IsSporkActive(int nSporkID);
     int64_t GetSporkValue(int nSporkID);

@@ -1,6 +1,5 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -31,7 +30,7 @@
 #include "masternodeconfig.h"
 
 #include "init.h"
-#include "rpcserver.h"
+#include "rpc/server.h"
 #include "scheduler.h"
 #include "ui_interface.h"
 #include "util.h"
@@ -179,12 +178,12 @@ public:
     explicit BitcoinCore();
 
 public Q_SLOTS:
-    void initialize();
+            void initialize();
     void shutdown();
     void restart(QStringList args);
 
-Q_SIGNALS:
-    void initializeResult(int retval);
+    Q_SIGNALS:
+            void initializeResult(int retval);
     void shutdownResult(int retval);
     void runawayException(const QString &message);
 
@@ -232,13 +231,13 @@ public:
     WId getMainWinId() const;
 
 public Q_SLOTS:
-    void initializeResult(int retval);
+            void initializeResult(int retval);
     void shutdownResult(int retval);
     /// Handle runaway exceptions. Shows a message box with the problem and quits the program.
     void handleRunawayException(const QString &message);
 
-Q_SIGNALS:
-    void requestedInitialize();
+    Q_SIGNALS:
+            void requestedInitialize();
     void requestedRestart(QStringList args);
     void requestedShutdown();
     void stopThread();
@@ -256,6 +255,7 @@ private:
 #endif
     int returnValue;
     const PlatformStyle *platformStyle;
+    std::unique_ptr<QWidget> shutdownWindow;
 
     void startThread();
 };
@@ -263,7 +263,7 @@ private:
 #include "aither.moc"
 
 BitcoinCore::BitcoinCore():
-    QObject()
+        QObject()
 {
 }
 
@@ -331,17 +331,17 @@ void BitcoinCore::shutdown()
 }
 
 BitcoinApplication::BitcoinApplication(int &argc, char **argv):
-    QApplication(argc, argv),
-    coreThread(0),
-    optionsModel(0),
-    clientModel(0),
-    window(0),
-    pollShutdownTimer(0),
+        QApplication(argc, argv),
+        coreThread(0),
+        optionsModel(0),
+        clientModel(0),
+        window(0),
+        pollShutdownTimer(0),
 #ifdef ENABLE_WALLET
-    paymentServer(0),
+paymentServer(0),
     walletModel(0),
 #endif
-    returnValue(0)
+        returnValue(0)
 {
     setQuitOnLastWindowClosed(false);
 
@@ -408,9 +408,8 @@ void BitcoinApplication::createWindow(const NetworkStyle *networkStyle)
 void BitcoinApplication::createSplashScreen(const NetworkStyle *networkStyle)
 {
     SplashScreen *splash = new SplashScreen(0, networkStyle);
-    // We don't hold a direct pointer to the splash screen after creation, so use
-    // Qt::WA_DeleteOnClose to make sure that the window will be deleted eventually.
-    splash->setAttribute(Qt::WA_DeleteOnClose);
+    // We don't hold a direct pointer to the splash screen after creation, but the splash
+    // screen will take care of deleting itself when slotFinish happens.
     splash->show();
     connect(this, SIGNAL(splashFinished(QWidget*)), splash, SLOT(slotFinish(QWidget*)));
     connect(this, SIGNAL(requestedShutdown()), splash, SLOT(close()));
@@ -453,6 +452,11 @@ void BitcoinApplication::requestInitialize()
 
 void BitcoinApplication::requestShutdown()
 {
+    // Show a simple window indicating shutdown status
+    // Do this first as some of the steps may take some time below,
+    // for example the RPC console may still be executing a command.
+    shutdownWindow.reset(ShutdownWindow::showShutdownWindow(window));
+
     qDebug() << __func__ << ": Requesting shutdown";
     startThread();
     window->hide();
@@ -466,9 +470,6 @@ void BitcoinApplication::requestShutdown()
 #endif
     delete clientModel;
     clientModel = 0;
-
-    // Show a simple window indicating shutdown status
-    ShutdownWindow::showShutdownWindow(window);
 
     // Request shutdown from core thread
     Q_EMIT requestedShutdown();
@@ -593,6 +594,7 @@ int main(int argc, char *argv[])
     //   Need to pass name here as CAmount is a typedef (see http://qt-project.org/doc/qt-5/qmetatype.html#qRegisterMetaType)
     //   IMPORTANT if it is no longer a typedef use the normal variant above
     qRegisterMetaType< CAmount >("CAmount");
+    qRegisterMetaType< std::function<void(void)> >("std::function<void(void)>");
 
     /// 3. Application identification
     // must be set before OptionsModel is initialized or translations are loaded,
@@ -692,7 +694,7 @@ int main(int argc, char *argv[])
     // Install qDebug() message handler to route to debug.log
     qInstallMsgHandler(DebugMessageHandler);
 #else
-#if defined(Q_OS_WIN)
+    #if defined(Q_OS_WIN)
     // Install global event filter for processing Windows session related Windows messages (WM_QUERYENDSESSION and WM_ENDSESSION)
     qApp->installNativeEventFilter(new WinShutdownMonitor());
 #endif

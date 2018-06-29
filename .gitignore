@@ -80,7 +80,7 @@ share/BitcoindComparisonTool.jar
 .autotools
 /doc/doxygen/
 
-libbitcoinconsensus.pc
+libaitherconsensus.pc
 src/qt/aither-qt.bash
 qa/pull-tester/tests-config.sh
 

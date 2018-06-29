@@ -1,7 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -18,7 +17,6 @@
 #include <boost/assign/list_of.hpp>
 
 #include "chainparamsseeds.h"
-
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
@@ -41,7 +39,17 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     return genesis;
 }
 
-
+/**
+ * Build the genesis block. Note that the output of its generation
+ * transaction cannot be spent since it did not originally exist in the
+ * database.
+ *
+ * CBlock(hash=00000ffd590b14, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=e0028e, nTime=1390095618, nBits=1e0ffff0, nNonce=28917698, vtx=1)
+ *   CTransaction(hash=e0028e, ver=1, vin.size=1, vout.size=1, nLockTime=0)
+ *     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d01044c5957697265642030392f4a616e2f3230313420546865204772616e64204578706572696d656e7420476f6573204c6976653a204f76657273746f636b2e636f6d204973204e6f7720416363657074696e6720426974636f696e73)
+ *     CTxOut(nValue=50.00000000, scriptPubKey=0xA9037BAC7050C479B121CF)
+ *   vMerkleTree: e0028e
+ */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "The Times 25/May/2018 Bitcoin investigation to focus on British traders";
@@ -89,6 +97,7 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Aither: 150 seconds
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
+        consensus.nPowDGWHeight = 15200;
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -99,6 +108,19 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1502280000; // Aug 9th, 2017
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1533816000; // Aug 9th, 2018
+
+        // Deployment of DIP0001
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1525104000; // May 1st, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1556640000; // May 1st, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 4032;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 3226; // 80% of 4032
+
+        // The best chain should have at least this much work.
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000002149557fc3c48"); // 4131
+
+        // By default assume that the signatures in ancestors of this block are valid.
+        consensus.defaultAssumeValid = uint256S("0x00000000002f3273d11fb230340a487cd69b89df0c85b6e3a902ae9bd82d067a"); // 4131
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -133,8 +155,9 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         // Aither BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
+
         // Aither BIP44 coin type is '5'
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x05).convert_to_container<std::vector<unsigned char> >();
+        nExtCoinType = 5;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
@@ -152,12 +175,15 @@ public:
 
         checkpointData = (CCheckpointData){
             boost::assign::map_list_of
-            ( 0, uint256S("0x0000020ea07c95ed41cce23cf0b089f760029d2fa68ebecdee096155047fa1d7"))
-            ( 800, uint256S("0x0000000434754c454c17b9a6a47b72690535be87a442bbe07bd95f793af30d06")),
-            1529635323, // * UNIX timestamp of last checkpoint block
-            3,          // * total number of transactions between genesis and last checkpoint
+            ( 0, uint256S("0x0000031315d3b40f556e99f24e594393bd857438b9a53756c36ceaf123e2bf35"))
+            ( 500, uint256S("0x000006694d12d90a3e349185566ba3f12fb41eda6a7efd12bec451adb7f1b23a"))
+            ( 1500, uint256S("0x00000000013a7f50c2f7c1028a14cd48f11b29380f9ad19265a2f271e2882933"))
+            ( 2500, uint256S("0x0000000002eefcb4e6e98d237139701b4f5025ee841e3fc2e33db854663e3813"))
+            ( 3500, uint256S("0x0000000000db764c42789d24e5a7b1ab12e78dcf3f49823ff60e262ab01fb547")),
+            1530131373, // * UNIX timestamp of last checkpoint block
+            2050,       // * total number of transactions between genesis and last checkpoint
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            1           // * estimated number of transactions per day after checkpoint
+            1000        // * estimated number of transactions per day after checkpoint
         };
     }
 };
@@ -187,13 +213,14 @@ public:
         consensus.nMajorityEnforceBlockUpgrade = 51;
         consensus.nMajorityRejectBlockOutdated = 75;
         consensus.nMajorityWindow = 100;
-        consensus.BIP34Height = 21111; // FIX
+        consensus.BIP34Height = 1; // FIX
         consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8"); // FIX
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
         consensus.nPowTargetTimespan = 5 * 60; // Aither: 5 minutes, 5 blocks
         consensus.nPowTargetSpacing = 1 * 60; // Aither: 60 seconds
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
+        consensus.nPowDGWHeight = 3000;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -205,6 +232,19 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1502280000; // Aug 9th, 2017
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1533816000; // Aug 9th, 2018
 
+        // Deployment of DIP0001
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1522857600; // April 4th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1554393600; // April 4th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 50; // 50% of 100
+
+        // The best chain should have at least this much work.
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000000004bc384007"); // 1131
+
+        // By default assume that the signatures in ancestors of this block are valid.
+        consensus.defaultAssumeValid = uint256S("0x000000548cf582286ea1199cbcf66ce45625da013e3cd36cc815b5450f752d33"); // 1131
+
         pchMessageStart[0] = 0xcd;
         pchMessageStart[1] = 0xf8;
         pchMessageStart[2] = 0xdc;
@@ -212,6 +252,7 @@ public:
         vAlertPubKey = ParseHex("04904d236abae451f9b5c7bf476486588f503a18096d538a7d8cddd95dd0ebcfd7433d0a5969c88eb47af4090a43437776ed09ddf95970d8363e196bc1a9391ced");
         nDefaultPort = 41888;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
+        nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1527241999, 1001393, 0x1e0ffff0, 1, 50 * COIN);
@@ -235,7 +276,7 @@ public:
         // Testnet Aither BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
         // Testnet Aither BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+        nExtCoinType = 1;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
@@ -294,6 +335,7 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Aither: 150 seconds
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
+        consensus.nPowDGWHeight = 700; // same as mainnet
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
         consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -302,12 +344,22 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 999999999999ULL;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 999999999999ULL;
+
+        // The best chain should have at least this much work.
+        consensus.nMinimumChainWork = uint256S("0x00");
+
+        // By default assume that the signatures in ancestors of this block are valid.
+        consensus.defaultAssumeValid = uint256S("0x00");
 
         pchMessageStart[0] = 0x4d;
         pchMessageStart[1] = 0x9b;
         pchMessageStart[2] = 0x37;
         pchMessageStart[3] = 0x28;
         nMaxTipAge = 60 * 60 * 60; // ~1440 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin => change to 60 hrs
+        nDelayGetHeadersTime = 0; // never delay GETHEADERS in regtests
         nDefaultPort = 42888;
         nPruneAfterHeight = 1000;
 
@@ -345,7 +397,7 @@ public:
         // Regtest Aither BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
         // Regtest Aither BIP44 coin type is '1' (All coin's testnet default)
-        base58Prefixes[EXT_COIN_TYPE]  = boost::assign::list_of(0x80)(0x00)(0x00)(0x01).convert_to_container<std::vector<unsigned char> >();
+        nExtCoinType = 1;
    }
 };
 static CRegTestParams regTestParams;

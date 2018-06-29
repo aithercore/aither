@@ -53,10 +53,10 @@ static int AppInitRawTx(int argc, char* argv[])
     {
         // First part of help message is specific to this utility
         std::string strUsage = _("Aither Core aither-tx utility version") + " " + FormatFullVersion() + "\n\n" +
-            _("Usage:") + "\n" +
-              "  aither-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded aither transaction") + "\n" +
-              "  aither-tx [options] -create [commands]   " + _("Create hex-encoded aither transaction") + "\n" +
-              "\n";
+                               _("Usage:") + "\n" +
+                               "  aither-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded aither transaction") + "\n" +
+                               "  aither-tx [options] -create [commands]   " + _("Create hex-encoded aither transaction") + "\n" +
+                               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());
 
@@ -79,10 +79,10 @@ static int AppInitRawTx(int argc, char* argv[])
         strUsage += HelpMessageOpt("outdata=[VALUE:]DATA", _("Add data-based output to TX"));
         strUsage += HelpMessageOpt("outscript=VALUE:SCRIPT", _("Add raw script output to TX"));
         strUsage += HelpMessageOpt("sign=SIGHASH-FLAGS", _("Add zero or more signatures to transaction") + ". " +
-            _("This command requires JSON registers:") +
-            _("prevtxs=JSON object") + ", " +
-            _("privatekeys=JSON object") + ". " +
-            _("See signrawtransaction docs for format of sighash flags, JSON objects."));
+                                                         _("This command requires JSON registers:") +
+                                                         _("prevtxs=JSON object") + ", " +
+                                                         _("privatekeys=JSON object") + ". " +
+                                                         _("See signrawtransaction docs for format of sighash flags, JSON objects."));
         fprintf(stdout, "%s", strUsage.c_str());
 
         strUsage = HelpMessageGroup(_("Register Commands:"));
@@ -200,7 +200,7 @@ static void MutateTxAddInput(CMutableTransaction& tx, const string& strInput)
     uint256 txid(uint256S(strTxid));
 
     static const unsigned int minTxOutSz = 9;
-    static const unsigned int maxVout = MAX_BLOCK_SIZE / minTxOutSz;
+    static const unsigned int maxVout = MaxBlockSize(true) / minTxOutSz;
 
     // extract and validate vout
     string strVout = strInput.substr(pos + 1, string::npos);
@@ -325,12 +325,12 @@ static const struct {
     const char *flagStr;
     int flags;
 } sighashOptions[N_SIGHASH_OPTS] = {
-    {"ALL", SIGHASH_ALL},
-    {"NONE", SIGHASH_NONE},
-    {"SINGLE", SIGHASH_SINGLE},
-    {"ALL|ANYONECANPAY", SIGHASH_ALL|SIGHASH_ANYONECANPAY},
-    {"NONE|ANYONECANPAY", SIGHASH_NONE|SIGHASH_ANYONECANPAY},
-    {"SINGLE|ANYONECANPAY", SIGHASH_SINGLE|SIGHASH_ANYONECANPAY},
+        {"ALL", SIGHASH_ALL},
+        {"NONE", SIGHASH_NONE},
+        {"SINGLE", SIGHASH_SINGLE},
+        {"ALL|ANYONECANPAY", SIGHASH_ALL|SIGHASH_ANYONECANPAY},
+        {"NONE|ANYONECANPAY", SIGHASH_NONE|SIGHASH_ANYONECANPAY},
+        {"SINGLE|ANYONECANPAY", SIGHASH_SINGLE|SIGHASH_ANYONECANPAY},
 };
 
 static bool findSighashFlags(int& flags, const string& flagStr)
@@ -420,21 +420,23 @@ static void MutateTxSign(CMutableTransaction& tx, const string& flagStr)
             if (nOut < 0)
                 throw runtime_error("vout must be positive");
 
+            COutPoint out(txid, nOut);
             vector<unsigned char> pkData(ParseHexUV(prevOut["scriptPubKey"], "scriptPubKey"));
             CScript scriptPubKey(pkData.begin(), pkData.end());
 
             {
-                CCoinsModifier coins = view.ModifyCoins(txid);
-                if (coins->IsAvailable(nOut) && coins->vout[nOut].scriptPubKey != scriptPubKey) {
+                const Coin& coin = view.AccessCoin(out);
+                if (!coin.IsSpent() && coin.out.scriptPubKey != scriptPubKey) {
                     string err("Previous output scriptPubKey mismatch:\n");
-                    err = err + ScriptToAsmStr(coins->vout[nOut].scriptPubKey) + "\nvs:\n"+
-                        ScriptToAsmStr(scriptPubKey);
+                    err = err + ScriptToAsmStr(coin.out.scriptPubKey) + "\nvs:\n"+
+                          ScriptToAsmStr(scriptPubKey);
                     throw runtime_error(err);
                 }
-                if ((unsigned int)nOut >= coins->vout.size())
-                    coins->vout.resize(nOut+1);
-                coins->vout[nOut].scriptPubKey = scriptPubKey;
-                coins->vout[nOut].nValue = 0; // we don't know the actual output value
+                Coin newcoin;
+                newcoin.out.scriptPubKey = scriptPubKey;
+                newcoin.out.nValue = 0; // we don't know the actual output value
+                newcoin.nHeight = 1;
+                view.AddCoin(out, std::move(newcoin), true);
             }
 
             // if redeemScript given and private keys given,
@@ -456,12 +458,12 @@ static void MutateTxSign(CMutableTransaction& tx, const string& flagStr)
     // Sign what we can:
     for (unsigned int i = 0; i < mergedTx.vin.size(); i++) {
         CTxIn& txin = mergedTx.vin[i];
-        const CCoins* coins = view.AccessCoins(txin.prevout.hash);
-        if (!coins || !coins->IsAvailable(txin.prevout.n)) {
+        const Coin& coin = view.AccessCoin(txin.prevout);
+        if (coin.IsSpent()) {
             fComplete = false;
             continue;
         }
-        const CScript& prevPubKey = coins->vout[txin.prevout.n].scriptPubKey;
+        const CScript& prevPubKey = coin.out.scriptPubKey;
 
         txin.scriptSig.clear();
         // Only sign SIGHASH_SINGLE if there's a corresponding output:

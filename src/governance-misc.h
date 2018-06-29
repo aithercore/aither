@@ -1,13 +1,11 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #ifndef GOVERNANCE_MISC_H
 #define GOVERNANCE_MISC_H
 
-#include "main.h"
+#include "validation.h"
 #include "governance.h"
 #include "init.h"
 

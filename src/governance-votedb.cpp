@@ -1,5 +1,4 @@
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2017-2018 The GoByte Core developers
 // Copyright (c) 2018 The Aither Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -55,11 +54,11 @@ std::vector<CGovernanceVote> CGovernanceObjectVoteFile::GetVotes() const
     return vecResult;
 }
 
-void CGovernanceObjectVoteFile::RemoveVotesFromMasternode(const CTxIn& vinMasternode)
+void CGovernanceObjectVoteFile::RemoveVotesFromMasternode(const COutPoint& outpointMasternode)
 {
     vote_l_it it = listVotes.begin();
     while(it != listVotes.end()) {
-        if(it->GetVinMasternode() == vinMasternode) {
+        if(it->GetMasternodeOutpoint() == outpointMasternode) {
             --nMemoryVotes;
             mapVoteIndex.erase(it->GetHash());
             listVotes.erase(it++);

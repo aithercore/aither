@@ -1,8 +1,8 @@
 Source: aither
 Section: utils
 Priority: optional
-Maintainer: Holger Schinzel <holger@aither.org>
-Uploaders: Holger Schinzel <holger@aither.org>
+Maintainer: Holger Schinzel <holger@dash.org>
+Uploaders: Holger Schinzel <holger@dash.org>
 Build-Depends: debhelper,
  devscripts,
  automake,
@@ -24,7 +24,7 @@ Build-Depends: debhelper,
  libprotobuf-dev, protobuf-compiler,
  python
 Standards-Version: 3.9.2
-Homepage: https://www.aither.org/
+Homepage: https://www.aithercoin.com/
 Vcs-Git: git://github.com/aithercore/aither.git
 Vcs-Browser: https://github.com/aithercore/aither
 

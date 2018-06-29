@@ -182,13 +182,13 @@ rm SHA256SUMS
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spurious/nonsensical entry.
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the aither.org server
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the aithercoin.com server
 
-- Update aither.org
+- Update aithercoin.com
 
 - Announce the release:
 
-  - Release on Aither forum: https://www.aither.org/forum/topic/official-announcements.54/
+  - Release on Aither forum: https://www.aithercoin.com/forum/topic/official-announcements.54/
 
   - Aither-development mailing list
 
@@ -196,7 +196,7 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
   - Optionally reddit /r/Aitherpay, ... but this will usually sort out itself
 
-- Notify flare so that he can start building [the PPAs](https://launchpad.net/~aither.org/+archive/ubuntu/aither)
+- Notify flare so that he can start building [the PPAs](https://launchpad.net/~aithercoin.com/+archive/ubuntu/aither)
 
 - Add release notes for the new version to the directory `doc/release-notes` in git master
 

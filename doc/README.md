@@ -1,7 +1,7 @@
 Aither Core 0.12.1
 =====================
 
-This is the official reference wallet for Aither digital currency and comprises the backbone of the Aither peer-to-peer network. You can [download Aither Core](https://www.aither.org/downloads/) or [build it yourself](#building) using the guides below.
+This is the official reference wallet for Aither digital currency and comprises the backbone of the Aither peer-to-peer network. You can [download Aither Core](https://www.aithercoin.com/downloads/) or [build it yourself](#building) using the guides below.
 
 Running
 ---------------------

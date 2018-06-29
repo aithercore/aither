@@ -17,7 +17,7 @@
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>0.12.2, Copyright © 2009-2018 The Bitcoin Core developers, 2014-2018 The Dash Core developers, 2017-2018 The Aither Core developers, 2018-2018 The Aither Core developers</string>
+  <string>0.12.2, Copyright © 2009-2018 The Bitcoin Core developers, 2018 The Aither Core developers</string>
 
   <key>CFBundleShortVersionString</key>
   <string>0.12.2</string>
@@ -71,7 +71,7 @@
         <string>application/x-aither-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>aithercoinmentrequest</string>
+          <string>aitherpaymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -99,7 +99,7 @@
 
   <key>LSAppNapIsDisabled</key>
     <string>True</string>
-  
+
   <key>LSApplicationCategoryType</key>
     <string>public.app-category.finance</string>
 </dict>

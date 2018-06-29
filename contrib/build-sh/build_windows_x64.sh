@@ -11,6 +11,8 @@ sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev g++-mingw-w64-x86-
 cd depends
 make HOST=x86_64-w64-mingw32 -j4
 cd ..
+echo 1 | sudo update-alternatives --config x86_64-w64-mingw32-gcc
+echo 1 | sudo update-alternatives --config x86_64-w64-mingw32-g++
 ./autogen.sh
 ./configure --prefix=`pwd`/depends/x86_64-w64-mingw32
 make
