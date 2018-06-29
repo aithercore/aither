@@ -141,9 +141,9 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x0000020ea07c95ed41cce23cf0b089f760029d2fa68ebecdee096155047fa1d7"));
         assert(genesis.hashMerkleRoot == uint256S("0xd4738ed2bf2c60f93deea6e430cbdba4a4ca0446194c8f54ad4eae14657c273e"));
 
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "seed-1.aithercoin.com"));
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "seed-2.aithercoin.com"));
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "seed-3.aithercoin.com"));
+        vSeeds.push_back(CDNSSeedData("aither.blue", "seed-1.aither.blue"));
+        vSeeds.push_back(CDNSSeedData("aither.blue", "seed-2.aither.blue"));
+        vSeeds.push_back(CDNSSeedData("aither.blue", "seed-3.aither.blue"));
 
         // Aither addresses start with 'A'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,23);
@@ -262,8 +262,8 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "test.seed-1.aithercoin.com"));
-        vSeeds.push_back(CDNSSeedData("aithercoin.com", "test.seed-2.aithercoin.com"));
+        vSeeds.push_back(CDNSSeedData("aither.blue", "seedtest-1.aither.blue"));
+        vSeeds.push_back(CDNSSeedData("aither.blue", "seedtest-2.aither.blue"));
 
         // Testnet Aither addresses start with 'B'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,25);

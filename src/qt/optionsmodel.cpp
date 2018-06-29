@@ -78,8 +78,8 @@ void OptionsModel::Init(bool resetSettings)
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("strThirdPartyTxUrls"))
-        settings.setValue("strThirdPartyTxUrls", "https://explorer.aithercoin.com/tx/%s");
-    strThirdPartyTxUrls = settings.value("strThirdPartyTxUrls", "https://explorer.aithercoin.com/tx/%s").toString();
+        settings.setValue("strThirdPartyTxUrls", "https://explorer.aither.eco/tx/%s");
+    strThirdPartyTxUrls = settings.value("strThirdPartyTxUrls", "https://explorer.aither.eco/tx/%s").toString();
 
     if (!settings.contains("theme"))
         settings.setValue("theme", "");
