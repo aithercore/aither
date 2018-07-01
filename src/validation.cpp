@@ -1252,13 +1252,11 @@ CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 /*
     int nMNPIBlock = Params().GetConsensus().nMasternodePaymentsIncreaseBlock;
     int nMNPIPeriod = Params().GetConsensus().nMasternodePaymentsIncreasePeriod;
-
                                                                       // mainnet:
     if(nHeight > nMNPIBlock)                  ret += blockValue / 10; // 124000 - 60% - 2018-06-30
     if(nHeight > nMNPIBlock+(nMNPIPeriod* 1)) ret += blockValue / 10; // 141280 - 70% - 2018-07-30
-
-    return ret;
 */
+    return ret;
 }
 
 bool IsInitialBlockDownload()
