@@ -1,4 +1,4 @@
-Aither Core staging tree 0.12.2.2
+Aither Core staging tree 0.12.2.3
 ===============================
 
 `master:` [![Build Status](https://travis-ci.org/aithercore/aither.svg?branch=master)](https://travis-ci.org/aithercoin/aither) `develop:` [![Build Status](https://travis-ci.org/aithercore/aither.svg?branch=develop)](https://travis-ci.org/aithercoin/aither/branches)
