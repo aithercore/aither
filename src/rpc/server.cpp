@@ -587,7 +587,7 @@ std::string HelpExampleCli(const std::string& methodname, const std::string& arg
 std::string HelpExampleRpc(const std::string& methodname, const std::string& args)
 {
     return "> curl --user myusername --data-binary '{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", "
-        "\"method\": \"" + methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:12454/\n";
+        "\"method\": \"" + methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:40999/\n";
 }
 
 void RPCRegisterTimerInterface(RPCTimerInterface *iface)
