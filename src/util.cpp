@@ -633,7 +633,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
         // Create empty aither.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL) {
-            std::string strHeader = "# Default nodes config\n"
+            std::string strHeader = "# Default nodes config, the other config please put above this line\n"
                                     "addnode=node-01.aither.blue:40888\n"
                                     "addnode=node-02.aither.blue:40888\n"
                                     "addnode=node-03.aither.blue:40888\n"
@@ -663,7 +663,8 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
                                     "addnode=node-27.aither.blue:40888\n"
                                     "addnode=node-28.aither.blue:40888\n"
                                     "addnode=node-29.aither.blue:40888\n"
-                                    "addnode=node-30.aither.blue:40888";
+                                    "addnode=node-30.aither.blue:40888\n"
+                                    "addnode=node-31.aither.blue:40888";
             fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
             fclose(configFile);
         }
