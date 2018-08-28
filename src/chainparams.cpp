@@ -90,8 +90,8 @@ public:
         consensus.nMajorityEnforceBlockUpgrade = 750;
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
-        consensus.BIP34Height = 227931; // FIX
-        consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8"); // FIX
+        consensus.BIP34Height = 0; // FIX
+        consensus.BIP34Hash = uint256S("0x000001c52d16f26c9dc9610946ef7a5fdb71613ae062162b8e68828ef6416e1f"); // FIX
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
         consensus.nPowTargetTimespan = 60 * 60; // Aither: 1 hour, 24 blocks
         consensus.nPowTargetSpacing = 2.5 * 60; // Aither: 150 seconds
@@ -215,8 +215,8 @@ public:
         consensus.nMajorityEnforceBlockUpgrade = 51;
         consensus.nMajorityRejectBlockOutdated = 75;
         consensus.nMajorityWindow = 100;
-        consensus.BIP34Height = 1; // FIX
-        consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8"); // FIX
+        consensus.BIP34Height = 0; // FIX
+        consensus.BIP34Hash = uint256S("0x00000281236a465bed97a6b593ee4d9e60cbfa76d85e4a3b106c7ef1df5c95c1"); // FIX
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
         consensus.nPowTargetTimespan = 5 * 60; // Aither: 5 minutes, 5 blocks
         consensus.nPowTargetSpacing = 1 * 60; // Aither: 60 seconds
