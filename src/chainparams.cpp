@@ -117,10 +117,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 3226; // 80% of 4032
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000002149557fc3c48"); // 4131
+        consensus.nMinimumChainWork = uint256S("0x00"); // 4131
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00000000002f3273d11fb230340a487cd69b89df0c85b6e3a902ae9bd82d067a"); // 4131
+        consensus.defaultAssumeValid = uint256S("0x00"); // 4131
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -242,10 +242,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 50; // 50% of 100
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000000004bc384007"); // 1131
+        consensus.nMinimumChainWork = uint256S("0x00"); // 1131
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x000000548cf582286ea1199cbcf66ce45625da013e3cd36cc815b5450f752d33"); // 1131
+        consensus.defaultAssumeValid = uint256S("0x00"); // 1131
 
         pchMessageStart[0] = 0xcd;
         pchMessageStart[1] = 0xf8;
